@@ -1,30 +1,19 @@
-from rest_framework.serializers import (
-    ModelSerializer,
-    Serializer,
-    CharField, 
-    FileField, 
-    ListField,
-    DateTimeField
-)   
+from rest_framework import serializers   
 from django.core.exceptions import ValidationError
 from .models import MediaSource
+from rest_framework.fields import FileField
 
 
 
-
-class MediaSourceSerializer(Serializer):
-    file_type = FileField()
-    title = CharField(max_length=255)
-    description = CharField(max_length=255)
-    created = DateTimeField()
-    updated = DateTimeField()
-
+class MediaSourcesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MediaSource
+        fields = ('id','title','video','description','created')
     
 
-class MultipleFileUploadSerializer(Serializer):
-    file_type = ListField(FileField())
-    title = CharField(max_length=255)
-    description = CharField(max_length=255)
-    created = DateTimeField()
-    updated = DateTimeField()
-
+class MultipleFileUploadSerializer(serializers.Serializer):
+    video = serializers.ListField(FileField())
+    title = serializers.CharField(max_length=255)
+    description = serializers.CharField(max_length=255)
+    created = serializers.DateTimeField()
+    

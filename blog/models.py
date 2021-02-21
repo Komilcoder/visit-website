@@ -1,7 +1,7 @@
 from django.db import models
 from django.db import models
 from django.contrib.auth import get_user_model
-
+from .validators import validate_file_extension
 User = get_user_model()
 
 import os
@@ -18,7 +18,7 @@ def get_profile_image_path(instance, filename):
 
 class Profile(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
-    image = models.ImageField(upload_to=get_profile_image_path)
+    image = models.ImageField(upload_to=get_profile_image_path,validators=[validate_file_extension],null=True)
     name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
 

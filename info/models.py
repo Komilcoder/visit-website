@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 import os
 from uuid import uuid4
+from .validators import validate_file_extension 
 
 User = get_user_model()
 
@@ -23,13 +24,12 @@ def image_path(instance, filename):
 class MediaSource(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     title = models.CharField(max_length=255,null=True)
-    image = models.ImageField(max_length=255,upload_to=image_path)
-    file_type = models.FileField(upload_to=get_profile_image_path)
+    video = models.FileField(upload_to=get_profile_image_path,validators=[validate_file_extension],null=True)
     description = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.user) + str(self.created)
 
     def count_files(self):

@@ -1,0 +1,20 @@
+{
+    "cSpell.words": [
+        "Gehirn",
+        "KEYJWT",
+        "crediantials",
+        "hwrp",
+        "jwkset",
+        "oaptm",
+        "prefex",
+        "redoc",
+        "simplejwt",
+        "yasg"
+    ],
+    "python.pythonPath": "env/bin/python3",
+    "python.envFile": ".env",
+
+
+    "python.autoComplete.extraPaths": ["./src"]
+}
+

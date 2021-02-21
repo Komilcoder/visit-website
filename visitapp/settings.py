@@ -39,7 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'info',
-    'rest_framework'
+    'account',
+    'rest_framework',
+    'drf_yasg',
+    'rest_framework.authtoken'
+    
 ]
 
 MIDDLEWARE = [
@@ -116,6 +120,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+# JWT
+JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
@@ -129,3 +135,19 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'account.backends.JWTAuthentication',
+    ]
+} 
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES':{
+        'account.backends.JWTAuthentication',
+    }
+}
