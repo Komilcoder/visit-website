@@ -8,11 +8,11 @@ class ProfileSerializers(serializers.ModelSerializer):
         model = Profile
         fields = ('id','image','name','last_name')
 
-    def validate_image(self,image):
-        file_size = image.file.size
-        limit_kb = 150
-        if file_size > limit_kb * 1024:
-            raise ValidationError("Max size of file is %s KB  limit")
+    # def validate_image(self,image):
+    #     file_size = image.file.size
+    #     limit_kb = 150
+    #     if file_size > limit_kb * 1024:
+    #         raise ValidationError("Max size of file is %s KB  limit")
 
 
 

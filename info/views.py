@@ -13,7 +13,7 @@ from .serializers import (
 
 )    
 from django.contrib.auth import get_user_model
-
+from rest_framework.permissions import AllowAny
 # from blog.models import Profile
 # from blog.serializers import ProfileSerializers,ProfileImageSerializer
 from django.http import Http404
@@ -21,7 +21,13 @@ User = get_user_model()
 
 
 class MediaSourceList(APIView):
-    """ all media lists """
+    """ GET,POST methos:
+    
+    title = title,
+    video = video url,
+    description = description
+    """
+    permission_classes = [AllowAny,]
 
     def get(self,request,format=None):
         media = MediaSource.objects.all().order_by('-created')
@@ -30,12 +36,19 @@ class MediaSourceList(APIView):
 
     def post(self,request,format=None):
         serializer = MediaSourcesSerializer(data=request.data)
-        serializer.is_valid(raise_exceptions=True)
-        serializer.save()
-        return Response(serializer.data,status=status.HTTP_201_CREATED)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)    
     
 class MediaSourceDetailView(APIView):
-    """ all media details """
+    """ Retreive,PUT,DELETE methods:
+        title = title,
+        video = video url,
+        description = description
+     """
+
+    permission_classes = [AllowAny,]
 
     def get_object(self,pk):
         try:

@@ -4,11 +4,13 @@
         "KEYJWT",
         "crediantials",
         "hwrp",
+        "isupper",
         "jwkset",
         "oaptm",
         "prefex",
         "redoc",
         "simplejwt",
+        "unregister",
         "yasg"
     ],
     "python.pythonPath": "env/bin/python3",

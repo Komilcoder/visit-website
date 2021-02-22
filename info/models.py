@@ -1,5 +1,5 @@
 from django.db import models
-from django.db import models
+
 from django.contrib.auth import get_user_model
 import os
 from uuid import uuid4
@@ -22,7 +22,7 @@ def image_path(instance, filename):
 
 
 class MediaSource(models.Model):
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     title = models.CharField(max_length=255,null=True)
     video = models.FileField(upload_to=get_profile_image_path,validators=[validate_file_extension],null=True)
     description = models.CharField(max_length=255)
@@ -33,11 +33,11 @@ class MediaSource(models.Model):
         return str(self.user) + str(self.created)
 
     def count_files(self):
-        return self.file_type.count()  
+        return self.video.count()  
 
     @property
     def filesize(self):
-        x = self.file_type
+        x = self.video
         y = 512000
         if x < y:
             value = round(x/1000,2)

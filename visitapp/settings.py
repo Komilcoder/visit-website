@@ -142,12 +142,15 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
         # 'rest_framework.authentication.SessionAuthentication',
         # 'rest_framework_simplejwt.authentication.JWTAuthentication',
-        'account.backends.JWTAuthentication',
+      
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
     ]
 } 
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES':{
-        'account.backends.JWTAuthentication',
-    }
-}
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES':(
+#         'account.backends.JWTAuthentication',
+#     )
+# }

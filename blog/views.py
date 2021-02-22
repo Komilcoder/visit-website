@@ -14,6 +14,13 @@ from django.http import Http404
 from rest_framework import viewsets
 
 class ProfileList(APIView):
+    """ 
+       get,post method:
+      user = user,
+      image = image,
+      name = first_name,
+      last_name=last_name
+    """
 
     permission_classes = [AllowAny,]
 
@@ -35,7 +42,13 @@ class ProfileList(APIView):
 
    
 class ProfileDetailView(APIView):
-    """ here: profile update,delete """
+    """ POST,Retreive,delete:
+        user = username,
+        image = image,
+        name = name,
+        last_name=last_name
+    
+    """
 
     def get_object(self,pk):
         try:
@@ -67,7 +80,10 @@ class ProfileDetailView(APIView):
 
 
 class ProfileListImageView(APIView):
-    """here:only for image, list image"""
+    """here:only for image, list image
+        GET method
+        image= image
+    """
 
     def get(self,request,format=None):
         profile = Profile.objects.get(id=1)
@@ -77,7 +93,11 @@ class ProfileListImageView(APIView):
 
 
 class ProfileImageView(APIView):
-    """ here:only for image,retreive,update,delete """ 
+    """ here:only for image,retreive,update,delete 
+    POST method
+    image = image
+    
+    """ 
 
     def get_object(self,pk):
         try:
@@ -92,9 +112,10 @@ class ProfileImageView(APIView):
         data['user'] = user
         serializer = ProfileImageSerializer(profile,data=request.data)
         print(serializer)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)    
 
     def get(self,request,pk,format=None):
         profile = self.get_object(pk)
